@@ -7,7 +7,7 @@ package sudokusolver;
 
 /**
  *
- * @author andreas.pettersson
+ * @author psson73@hotmail.com
  */
 public class SudokuSolver {
 

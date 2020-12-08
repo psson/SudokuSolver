@@ -7,36 +7,45 @@ package sudokusolver;
 
 /**
  *
- * @author andreas.pettersson
+ * @author psson73@hotmail.com
  */
 public class SudokuCell {
     
     private static final int NUM_POSSIBILITIES = 9;
     private int cellNumber;
-    private boolean[] cellPossibilities;
+    private CellPossibilities myPoss;
     
     public SudokuCell() {
         
         cellNumber = 0;
-        cellPossibilities = new boolean[ NUM_POSSIBILITIES-1 ];
-        for( int i=0 ; i<NUM_POSSIBILITIES ; i++ ) {
-            cellPossibilities[i] = true;
-        }
+        myPoss = new CellPossibilities();
         
     }
     
+    /**
+     * Sets found solution for the cell
+     * @param number The final answer for this cell
+     */
     public void setNumber( int number ) {
         
         cellNumber = number;
         
     }
     
+    /**
+     * Gets the found solution for the cell
+     * @return The final answer for this cell
+     */
     public int getNumber() {
         
         return cellNumber;
         
     }
     
+    /**
+     * Answers the question whether this cell has a final answer set
+     * @return True if an answer is found, false otherwise
+     */
     public boolean isSet() {
         
         if( cellNumber > 0 ) {
@@ -47,49 +56,26 @@ public class SudokuCell {
         
     }
     
+    /**
+     * Removes one of the remaining possibilities from the cell
+     * @param numToRemove The number to remove
+     */
     public void removePossibility( int numToRemove ) {
         
-        cellPossibilities[ numToRemove-1 ] = false;
+        myPoss.removePossibility( numToRemove );
         
     }
     
-    public boolean isSolved() {
+    public boolean checkPossibilities() {
         
-        int numPoss = 0;            // Counts the number of possibilities found
-        int lastFoundPoss = 0;      // Contains the index of the last found possibility
-
-        /**
-         * Loop through the array of possibilities and count the ones that
-         * are still possible.
-         */
-        for( int i=0 ; i < NUM_POSSIBILITIES ; i++ ) {
-            if( cellPossibilities[i] ) {
-                numPoss++;
-                lastFoundPoss = i+1;
-            }
-            
-            /**
-             * If more than one possibility remains the cell is not solved and no
-             * further searching is necessary. Break out of the loop.
-             */
-            if( numPoss > 1 ) {
-                break;
-            }
-        }
+        int r = myPoss.checkRemaining();
         
-        /**
-         * If there is just one possibility left the correct number has been found.
-         * Set the number of the cell and return true.
-         */
-        if( numPoss == 1 ) {
-            
-            setNumber(lastFoundPoss);
+        if (r > 0) {
+            cellNumber = r;
             return true;
-            
         } else {
             return false;
         }
-        
     }
     
 }

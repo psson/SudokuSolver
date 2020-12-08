@@ -7,14 +7,14 @@ package sudokusolver;
 
 /**
  *
- * @author andreas.pettersson
+ * @author psson73@hotmail.com
  */
 public class SudokuGrid {
     
     private static final int NUM_ROWS = 9;
     private static final int NUM_COLS = 9;
     
-    private SudokuCell[][] cellGrid;
+    private final SudokuCell[][] cellGrid;
     
     public SudokuGrid() {
         cellGrid = new SudokuCell[NUM_ROWS][NUM_COLS];
